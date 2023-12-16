@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace PreferenceRobot.Domain.Entities
 {
-    public class UniversityInfo : BaseEntity
+    public class City : BaseEntity
     {
-        public string UniversityName { get; set; }
-        public Guid CityId { get; set; }
-        public string Website { get; set; }
+        public string CityName { get; set; }
     }
 }

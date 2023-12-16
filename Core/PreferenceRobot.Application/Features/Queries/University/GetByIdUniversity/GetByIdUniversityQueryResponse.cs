@@ -1,13 +1,12 @@
-﻿using PreferenceRobot.Domain.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PreferenceRobot.Domain.Entities
+namespace PreferenceRobot.Application.Features.Queries.University.GetByIdUniversity
 {
-    public class UniversityInfo : BaseEntity
+    public class GetByIdUniversityQueryResponse
     {
         public string UniversityName { get; set; }
         public Guid CityId { get; set; }
