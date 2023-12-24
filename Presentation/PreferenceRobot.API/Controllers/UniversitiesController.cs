@@ -5,6 +5,7 @@ using PreferenceRobot.Application.Features.Commands.University.CreateUniversity;
 using PreferenceRobot.Application.Features.Commands.University.RemoveUniversity;
 using PreferenceRobot.Application.Features.Commands.University.UpdateUniversity;
 using PreferenceRobot.Application.Features.Queries.University.GetAllUniversity;
+using PreferenceRobot.Application.Features.Queries.University.GetAllUniversityDto;
 using PreferenceRobot.Application.Features.Queries.University.GetByIdUniversity;
 using System.Net;
 
@@ -55,6 +56,13 @@ namespace PreferenceRobot.API.Controllers
         {
             UpdateUniversityCommandResponse updateUniversityCommandResponse = await _mediator.Send(updateUniversityCommandRequest);
             return Ok();
+        }
+
+        [HttpGet("GetAllDto")]
+        public async Task<IActionResult> GetAllDto()
+        {
+            GetAllUniversityDtoQueryResponse response = await _mediator.Send(new GetAllUniversityDtoQueryRequest());
+            return Ok(response);
         }
     }
 }

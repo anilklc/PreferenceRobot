@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using PreferenceRobot.Application.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace PreferenceRobot.Application
         {
             var assembly = Assembly.GetExecutingAssembly();
             services.AddMediatR(cfg=>cfg.RegisterServicesFromAssembly(assembly));
+            services.AddAutoMapper(typeof(MappingProfile));
+           
         }
     }
 }

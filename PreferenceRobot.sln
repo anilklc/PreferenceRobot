@@ -5,19 +5,19 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{2AB87794-3748-49A0-A2D1-1785364938BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreferenceRobot.Domain", "Core\PreferenceRobot.Domain\PreferenceRobot.Domain.csproj", "{8EB20F54-B279-4A2A-8A1C-6EB3910F1543}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PreferenceRobot.Domain", "Core\PreferenceRobot.Domain\PreferenceRobot.Domain.csproj", "{8EB20F54-B279-4A2A-8A1C-6EB3910F1543}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreferenceRobot.Application", "Core\PreferenceRobot.Application\PreferenceRobot.Application.csproj", "{4CE51D2C-1F9A-4C7B-BABD-F1B29B305D1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PreferenceRobot.Application", "Core\PreferenceRobot.Application\PreferenceRobot.Application.csproj", "{4CE51D2C-1F9A-4C7B-BABD-F1B29B305D1C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{B43643F9-101B-4751-8B24-D29B346B20B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreferenceRobot.Infrastructure", "Infrastructure\PreferenceRobot.Infrastructure\PreferenceRobot.Infrastructure.csproj", "{A2913FD5-27BC-4A2F-BC1C-FC1D781E489A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PreferenceRobot.Infrastructure", "Infrastructure\PreferenceRobot.Infrastructure\PreferenceRobot.Infrastructure.csproj", "{A2913FD5-27BC-4A2F-BC1C-FC1D781E489A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreferenceRobot.Persistence", "Infrastructure\PreferenceRobot.Persistence\PreferenceRobot.Persistence.csproj", "{FDA19620-2D4F-4D0E-8A4F-CCED3C622D96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PreferenceRobot.Persistence", "Infrastructure\PreferenceRobot.Persistence\PreferenceRobot.Persistence.csproj", "{FDA19620-2D4F-4D0E-8A4F-CCED3C622D96}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{184A02E6-8CA5-47CC-A96A-0632DEA695C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreferenceRobot.API", "Presentation\PreferenceRobot.API\PreferenceRobot.API.csproj", "{09DEE21E-507A-4F74-96DB-2B903119C8CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PreferenceRobot.API", "Presentation\PreferenceRobot.API\PreferenceRobot.API.csproj", "{09DEE21E-507A-4F74-96DB-2B903119C8CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
