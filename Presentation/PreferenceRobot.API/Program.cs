@@ -1,4 +1,5 @@
 using PreferenceRobot.Application;
+using PreferenceRobot.Application.Exceptions;
 using PreferenceRobot.Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.ConfigureExceptionHandlingMiddleware();
 
 app.UseHttpsRedirection();
 

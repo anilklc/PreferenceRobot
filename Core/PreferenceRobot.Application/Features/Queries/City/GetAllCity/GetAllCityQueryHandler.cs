@@ -21,9 +21,9 @@ namespace PreferenceRobot.Application.Features.Queries.City.GetAllCity
         {
             var cities = _cityReadRepository.GetAll(false).ToList();
             return new()
-            { 
-                Cities = cities,
-            };
+             { 
+                 Cities = cities,
+             };
         }
     }
 }
