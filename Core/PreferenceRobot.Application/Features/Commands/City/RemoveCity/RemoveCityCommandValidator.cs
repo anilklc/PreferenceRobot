@@ -1,0 +1,17 @@
+﻿using FluentValidation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PreferenceRobot.Application.Features.Commands.City.RemoveCity
+{
+    public class RemoveCityCommandValidator : AbstractValidator<RemoveCityCommandRequest>
+    {
+        public RemoveCityCommandValidator()
+        {
+            RuleFor(c => c.Id).NotNull().NotEmpty().WithName("Id");
+        }
+    }
+}

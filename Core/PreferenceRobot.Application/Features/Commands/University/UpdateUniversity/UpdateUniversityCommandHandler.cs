@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PreferenceRobot.Application.Features.Commands.University.Rules;
 using PreferenceRobot.Application.Interfaces.Repositories.University;
 using PreferenceRobot.Domain.Entities;
 using System;
@@ -13,15 +14,18 @@ namespace PreferenceRobot.Application.Features.Commands.University.UpdateUnivers
     {
         private readonly IUniversityWriteRepository _universityWriteRepository;
         private readonly IUniversityReadRepository _universityReadRepository;
-
-        public UpdateUniversityCommandHandler(IUniversityWriteRepository universityWriteRepository, IUniversityReadRepository universityReadRepository = null)
+        private readonly UniversityRules _universityRules;
+        public UpdateUniversityCommandHandler(IUniversityWriteRepository universityWriteRepository, IUniversityReadRepository universityReadRepository = null, UniversityRules universityRules = null)
         {
             _universityWriteRepository = universityWriteRepository;
             _universityReadRepository = universityReadRepository;
+            _universityRules = universityRules;
         }
 
         public async Task<UpdateUniversityCommandResponse> Handle(UpdateUniversityCommandRequest request, CancellationToken cancellationToken)
         {
+            var cities = _universityReadRepository.GetAll(false).ToList();
+            await _universityRules.UniversityTitleMustNotBeSame(cities,request.UniversityName);
             UniversityInfo universityInfo = await _universityReadRepository.GetByIdAsync(request.Id);
             universityInfo.UniversityName = request.UniversityName;
             universityInfo.CityId = Guid.Parse(request.CityId);
