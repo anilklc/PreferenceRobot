@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PreferenceRobot.Domain.Common;
 using PreferenceRobot.Domain.Entities;
+using PreferenceRobot.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PreferenceRobot.Persistence.Context
 {
-    public class AppDbContext : IdentityDbContext<User,Role,Guid>
+    public class AppDbContext : IdentityDbContext<User,Role,string>
     {
         public AppDbContext(DbContextOptions options) : base(options)
         {

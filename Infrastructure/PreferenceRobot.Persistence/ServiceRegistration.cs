@@ -12,6 +12,12 @@ using System.Threading.Tasks;
 using PreferenceRobot.Persistence.Context;
 using PreferenceRobot.Domain.Entities;
 using Microsoft.Extensions.Configuration;
+using PreferenceRobot.Application.Interfaces.Services;
+using PreferenceRobot.Persistence.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using PreferenceRobot.Domain.Entities.Identity;
 
 namespace PreferenceRobot.Persistence
 {
@@ -20,11 +26,7 @@ namespace PreferenceRobot.Persistence
         public static void AddPersistenceServices(this IServiceCollection services,IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
-            services.AddScoped<IUniversityReadRepository,UniversityReadRepository>();
-            services.AddScoped<IUniversityWriteRepository,UniversityWriteRepository>();
-            services.AddScoped<ICityReadRepository,CityReadRepository>();
-            services.AddScoped<ICityWriteRepository,CityWriteRepository>();
-            services.AddIdentityCore<User>(opt =>
+            services.AddIdentity<User,Role>(opt =>
             {
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequiredLength = 2;
@@ -32,7 +34,18 @@ namespace PreferenceRobot.Persistence
                 opt.Password.RequireUppercase = false;
                 opt.Password.RequireDigit = false;
                 opt.SignIn.RequireConfirmedEmail = false;
-            }).AddRoles<Role>().AddEntityFrameworkStores<AppDbContext>();
+            }).AddEntityFrameworkStores<AppDbContext>();
+            services.AddScoped<IUniversityReadRepository,UniversityReadRepository>();
+            services.AddScoped<IUniversityWriteRepository,UniversityWriteRepository>();
+            services.AddScoped<ICityReadRepository,CityReadRepository>();
+            services.AddScoped<ICityWriteRepository,CityWriteRepository>();
+            services.AddScoped<IUserService,UserService>();
+            services.AddScoped<IAuthService,AuthService>();
+            
+            
+
+            
+            
         }
     }
 }

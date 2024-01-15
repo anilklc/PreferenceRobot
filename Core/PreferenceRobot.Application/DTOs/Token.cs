@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace PreferenceRobot.Application.DTOs
 {
-    public class CityDto
+    public class Token
     {
-        public Guid CityId { get; set; }
-        public string? CityName { get; set; }
+        public string AccessToken { get; set; }
+        public DateTime Expiration { get; set; }
+      //  public string RefreshToken { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace PreferenceRobot.Application.Features.Queries.University.GetByIdUnivers
 {
     public class GetByIdUniversityQueryRequest : IRequest<GetByIdUniversityQueryResponse>
     {
-        public string Id { get; set; }
+        public string? Id { get; set; }
     }
 }

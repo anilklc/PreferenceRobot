@@ -8,8 +8,8 @@ namespace PreferenceRobot.Application.Features.Queries.University.GetByIdUnivers
 {
     public class GetByIdUniversityQueryResponse
     {
-        public string UniversityName { get; set; }
+        public string? UniversityName { get; set; }
         public Guid CityId { get; set; }
-        public string Website { get; set; }
+        public string? Website { get; set; }
     }
 }

@@ -8,9 +8,9 @@ namespace PreferenceRobot.Application.DTOs
 {
     public class UniversityDto
     {
-        public string UniversityName { get; set; }
+        public string? UniversityName { get; set; }
         public Guid CityId { get; set; }
-        public string Website { get; set; }
-        public string CityName { get; set; }
+        public string? Website { get; set; }
+        public string? CityName { get; set; }
     }
 }

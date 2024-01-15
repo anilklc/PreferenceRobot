@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using PreferenceRobot.Application.Interfaces.Tokens;
-using PreferenceRobot.Infrastructure.Token;
+using PreferenceRobot.Infrastructure.Services.Token;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,28 +18,25 @@ namespace PreferenceRobot.Infrastructure
     {
         public static void AddInfrastructureService(this IServiceCollection services,IConfiguration configuration)
         {
-            services.Configure<TokenSettings>(configuration.GetSection("JWT"));
-            services.AddTransient<ITokenService, TokenService>();
+            services.AddScoped<ITokenService, TokenService>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer("Admin", options =>
-            {
-             options.TokenValidationParameters = new()
-             {
-            ValidateAudience = true,
-            ValidateIssuer = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
+      AddJwtBearer("Admin", options =>
+      {
+          options.TokenValidationParameters = new()
+          {
+              ValidateIssuer = true,
+              ValidateAudience = true,
+              ValidateLifetime = true,
+              ValidateIssuerSigningKey = true,
 
-            ValidAudience = configuration["Token:Audience"],
-            ValidIssuer = configuration["Token:Issuer"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:SecurityKey"])),
-            LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.UtcNow : false,
+              ValidAudience = configuration["Token:Audience"],
+              ValidIssuer = configuration["Token:Issuer"],
+              IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:Secret"]))
+          };
 
-            NameClaimType = ClaimTypes.Name
-             };
-            });
 
+      });
         } 
 
     }

@@ -1,5 +1,6 @@
 ﻿using PreferenceRobot.Application.DTOs;
 using PreferenceRobot.Domain.Entities;
+using PreferenceRobot.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -12,8 +13,7 @@ namespace PreferenceRobot.Application.Interfaces.Tokens
 {
     public interface ITokenService
     {
-        Task<JwtSecurityToken> CreateToken(User user, IList<string> roles);
+        Token CreateToken();
         string GenerateRefreshToken();
-        ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token);
     }
 }
