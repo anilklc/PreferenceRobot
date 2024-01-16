@@ -15,36 +15,20 @@ namespace PreferenceRobot.Application.Features.Commands.User.LoginUser
 {
     public class LoginUserCommandHandler : IRequestHandler<LoginUserCommandRequest, LoginUserCommandResponse>
     {
-        private readonly UserManager<Domain.Entities.Identity.User> _userManager;
-        private readonly SignInManager<Domain.Entities.Identity.User> _signInManager;
-        private readonly ITokenService _tokenService;
+        private readonly IAuthService _authService;
 
-        public LoginUserCommandHandler(UserManager<Domain.Entities.Identity.User> userManager, SignInManager<Domain.Entities.Identity.User> signInManager, ITokenService tokenService)
+        public LoginUserCommandHandler(IAuthService authService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _tokenService = tokenService;
+            _authService = authService;
         }
 
         public async Task<LoginUserCommandResponse> Handle(LoginUserCommandRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.Identity.User user = await _userManager.FindByEmailAsync(request.Email);
-            if (user == null)
+            var token = await _authService.LoginAsync(request.Email, request.Password);
+            return new LoginUserSuccessCommandResponse()
             {
-                throw new NotFoundUserException();
-            }
-            SignInResult result = await _signInManager.CheckPasswordSignInAsync(user,request.Password,false);
-            if (result.Succeeded) 
-            {
-                Token token = _tokenService.CreateToken();
-                return new LoginUserSuccessCommandResponse()
-                {
-                    Token=token,
-                };
-
-            }
-
-            throw new AuthenticationErrorException();
+                Token = token
+            };
         }
     }
 }

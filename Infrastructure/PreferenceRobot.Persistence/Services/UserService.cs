@@ -28,7 +28,7 @@ namespace PreferenceRobot.Persistence.Services
             {
                 UserName = user.Username,
                 Email = user.Email,
-                NameSurname = user.FirstName,
+                NameSurname = user.NameSurname,
                 
             }, user.Password);
             CreateUserResponse response = new() { Succeeded = result.Succeeded };

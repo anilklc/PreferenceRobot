@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Identity;
 using PreferenceRobot.Application.DTOs;
 using PreferenceRobot.Application.Exceptions;
+using PreferenceRobot.Application.Features.Commands.User.LoginUser;
 using PreferenceRobot.Application.Interfaces.Services;
 using PreferenceRobot.Application.Interfaces.Tokens;
 using PreferenceRobot.Domain.Entities;
@@ -17,26 +19,31 @@ namespace PreferenceRobot.Persistence.Services
     public class AuthService : IAuthService
     {
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly ITokenService _tokenService;
 
-        public AuthService(UserManager<User> userManager, ITokenService tokenService)
+        public AuthService(UserManager<User> userManager, ITokenService tokenService, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _tokenService = tokenService;
+            _signInManager = signInManager;
         }
 
         public async Task<Token> LoginAsync(string email, string password)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+           User user = await _userManager.FindByEmailAsync(email);
             if (user == null)
+            {
                 throw new NotFoundUserException();
-            bool result = await _userManager.CheckPasswordAsync(user,password);
-            if (result) 
+            }
+            SignInResult result = await _signInManager.CheckPasswordSignInAsync(user,password,false);
+            if (result.Succeeded)
             {
                 Token token = _tokenService.CreateToken();
-                string refreshToken = _tokenService.GenerateRefreshToken();
                 return token;
+
             }
+
             throw new AuthenticationErrorException();
         }
     }
