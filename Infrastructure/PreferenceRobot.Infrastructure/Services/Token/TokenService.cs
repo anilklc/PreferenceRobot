@@ -39,13 +39,13 @@ namespace PreferenceRobot.Infrastructure.Services.Token
                 audience: _configuration["Token:Audience"],
                 issuer: _configuration["Token:Issuer"],
                 expires: token.Expiration,
-                notBefore: DateTime.UtcNow,
+                notBefore: DateTime.Now,
                 signingCredentials: signingCredentials
                 );
 
             JwtSecurityTokenHandler tokenHandler = new ();
             token.AccessToken = tokenHandler.WriteToken(tokenJwt);
-            //token.RefreshToken = GenerateRefreshToken();
+            token.RefreshToken = GenerateRefreshToken();
             return token;
         }
 

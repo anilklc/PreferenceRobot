@@ -10,5 +10,6 @@ namespace PreferenceRobot.Application.Interfaces.Services
     public interface IAuthService
     {
         Task<Token> LoginAsync(string email,string password);
+        Task<Token> RefreshTokenLoginAsync(string refreshToken);
     }
 }

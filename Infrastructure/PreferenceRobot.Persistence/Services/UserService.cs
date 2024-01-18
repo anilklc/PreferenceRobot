@@ -1,6 +1,7 @@
 ﻿using Azure.Core;
 using Microsoft.AspNetCore.Identity;
 using PreferenceRobot.Application.DTOs.User;
+using PreferenceRobot.Application.Exceptions;
 using PreferenceRobot.Application.Features.Commands.User.CreateUser;
 using PreferenceRobot.Application.Interfaces.Services;
 using PreferenceRobot.Domain.Entities;
@@ -39,6 +40,21 @@ namespace PreferenceRobot.Persistence.Services
                 foreach (var error in result.Errors)
                     response.Message += $"{error.Code} - {error.Description}\n";
             return response;
+        }
+
+        public async Task UpdateRefreshToken(string refreshToken,User user,DateTime tokenDate,int refreshTokenTime) 
+        {
+
+            if (user != null)
+            {
+                user.RefreshToken = refreshToken;
+                user.RefreshTokenEndTime = tokenDate.AddMinutes(15);
+                await _userManager.UpdateAsync(user);
+            }
+            else
+            {
+                throw new NotFoundUserException();
+            }
         }
     }
 }

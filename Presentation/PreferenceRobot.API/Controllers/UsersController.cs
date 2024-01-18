@@ -10,7 +10,7 @@ namespace PreferenceRobot.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        readonly IMediator _mediator;
+        private readonly IMediator _mediator;
         public UsersController(IMediator mediator)
         {
             _mediator = mediator;
@@ -22,11 +22,5 @@ namespace PreferenceRobot.API.Controllers
             return Ok(response);
         }
 
-       [HttpPost("[action]")]
-        public async Task<IActionResult> Login(LoginUserCommandRequest loginUserCommandRequest)
-        {
-            LoginUserCommandResponse response = await _mediator.Send(loginUserCommandRequest);
-            return Ok(response);
-        }
     }
 }
