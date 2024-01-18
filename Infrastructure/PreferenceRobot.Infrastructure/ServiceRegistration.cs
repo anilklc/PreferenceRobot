@@ -33,7 +33,8 @@ namespace PreferenceRobot.Infrastructure
               ValidAudience = configuration["Token:Audience"],
               ValidIssuer = configuration["Token:Issuer"],
               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:Secret"])),
-              LifetimeValidator = (notBefore,expires,securityToken,validationParameters)=>expires !=null ? expires>DateTime.Now:false
+              LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.UtcNow : false,
+              NameClaimType = ClaimTypes.Name
               
           };
 

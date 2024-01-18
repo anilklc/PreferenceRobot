@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PreferenceRobot.Application.Features.Commands.University.CreateUniversity;
@@ -22,7 +23,7 @@ namespace PreferenceRobot.API.Controllers
         }
 
         [HttpGet]
-
+        [Authorize(AuthenticationSchemes = "Admin")]
         public async Task<IActionResult> GetAll()
         {
             GetAllUniversityQueryResponse response = await _mediator.Send(new GetAllUniversityQueryRequest());

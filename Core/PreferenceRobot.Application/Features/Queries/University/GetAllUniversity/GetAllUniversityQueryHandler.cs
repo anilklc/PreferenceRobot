@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using MediatR.Pipeline;
+using Microsoft.Extensions.Logging;
 using PreferenceRobot.Application.DTOs;
 using PreferenceRobot.Application.Interfaces.Repositories.University;
 using System;
@@ -13,15 +14,18 @@ namespace PreferenceRobot.Application.Features.Queries.University.GetAllUniversi
 {
     public class GetAllUniversityQueryHandler : IRequestHandler<GetAllUniversityQueryRequest, GetAllUniversityQueryResponse>
     {
-        //looger yapısı ilerde eklenecek
+        
         private readonly IUniversityReadRepository _universityReadRepository;
-        public GetAllUniversityQueryHandler(IUniversityReadRepository universityReadRepository)
+        private readonly ILogger<GetAllUniversityQueryHandler> _logger;
+        public GetAllUniversityQueryHandler(IUniversityReadRepository universityReadRepository, ILogger<GetAllUniversityQueryHandler> logger = null)
         {
             _universityReadRepository = universityReadRepository;
+            _logger = logger;
         }
 
         public async Task<GetAllUniversityQueryResponse> Handle(GetAllUniversityQueryRequest request, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Get All University");
             var universitises = _universityReadRepository.GetAll(false).ToList();
             return new()
             {

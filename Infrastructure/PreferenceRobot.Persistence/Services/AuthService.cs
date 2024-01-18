@@ -43,7 +43,7 @@ namespace PreferenceRobot.Persistence.Services
             SignInResult result = await _signInManager.CheckPasswordSignInAsync(user,password,false);
             if (result.Succeeded)
             {
-                Token token = _tokenService.CreateToken();
+                Token token = _tokenService.CreateToken(user);
                 await _userService.UpdateRefreshToken(token.RefreshToken,user,token.Expiration,15);
                 return token;
 
@@ -55,9 +55,9 @@ namespace PreferenceRobot.Persistence.Services
         public async Task<Token> RefreshTokenLoginAsync(string refreshToken)
         {
             User? user = _userManager.Users.FirstOrDefault(u => u.RefreshToken == refreshToken);
-            if (user != null && user.RefreshTokenEndTime > DateTime.Now)
+            if (user != null && user.RefreshTokenEndTime > DateTime.UtcNow)
             {
-                Token token = _tokenService.CreateToken();
+                Token token = _tokenService.CreateToken(user);
                 await _userService.UpdateRefreshToken(token.RefreshToken, user, token.Expiration, 15);
                 return token;
             }

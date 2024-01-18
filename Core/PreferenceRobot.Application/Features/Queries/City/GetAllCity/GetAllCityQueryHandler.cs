@@ -19,6 +19,7 @@ namespace PreferenceRobot.Application.Features.Queries.City.GetAllCity
 
         public async Task<GetAllCityQueryResponse> Handle(GetAllCityQueryRequest request, CancellationToken cancellationToken)
         {
+            throw new Exception("Hata test");
             var cities = _cityReadRepository.GetAll(false).ToList();
             return  new()
              { 

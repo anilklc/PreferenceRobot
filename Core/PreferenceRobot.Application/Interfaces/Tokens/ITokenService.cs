@@ -13,7 +13,7 @@ namespace PreferenceRobot.Application.Interfaces.Tokens
 {
     public interface ITokenService
     {
-        Token CreateToken();
+        Token CreateToken(User user);
         string GenerateRefreshToken();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using SendGrid.Helpers.Errors.Model;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,12 @@ namespace PreferenceRobot.Application.Exceptions
 {
     public class ExceptionMiddleware : IMiddleware
     {
+        private readonly ILogger<ExceptionMiddleware> _logger;
+
+        public ExceptionMiddleware(ILogger<ExceptionMiddleware> logger)
+        {
+            _logger = logger;
+        }
         public async Task InvokeAsync(HttpContext httpContext, RequestDelegate next)
         {
 			try
@@ -23,7 +30,7 @@ namespace PreferenceRobot.Application.Exceptions
 			}
         }
 
-		private static Task HandleExceptionAsync(HttpContext httpContext, Exception exception)
+		private Task HandleExceptionAsync(HttpContext httpContext, Exception exception)
 		{
 			int statusCode = GetStatusCode(exception);
 			httpContext.Response.ContentType= "application/json";
@@ -35,14 +42,15 @@ namespace PreferenceRobot.Application.Exceptions
                     Errors = ((ValidationException)exception).Errors.Select(x => x.ErrorMessage),
 					StatusCode = StatusCodes.Status400BadRequest
 				}.ToString());
-
-
+           
             List<string> errors = new()
 			{
 				$"Error Message: {exception.Message}"
 			};
 
-			return httpContext.Response.WriteAsync(new ExceptionModel
+            _logger.LogError(exception.ToString());
+
+            return httpContext.Response.WriteAsync(new ExceptionModel
 			{
 				Errors=errors,
 				StatusCode=statusCode
