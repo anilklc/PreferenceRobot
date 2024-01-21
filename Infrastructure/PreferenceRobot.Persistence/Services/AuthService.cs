@@ -1,9 +1,11 @@
 ﻿using Azure.Core;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using PreferenceRobot.Application.DTOs;
 using PreferenceRobot.Application.Exceptions;
 using PreferenceRobot.Application.Features.Commands.User.LoginUser;
+using PreferenceRobot.Application.Interfaces.Mail;
 using PreferenceRobot.Application.Interfaces.Services;
 using PreferenceRobot.Application.Interfaces.Tokens;
 using PreferenceRobot.Domain.Entities;
@@ -24,18 +26,20 @@ namespace PreferenceRobot.Persistence.Services
         private readonly SignInManager<User> _signInManager;
         private readonly ITokenService _tokenService;
         private readonly IUserService _userService;
+        private readonly IMailService _mailService;
 
-        public AuthService(UserManager<User> userManager, ITokenService tokenService, SignInManager<User> signInManager, IUserService userService = null)
+        public AuthService(UserManager<User> userManager, ITokenService tokenService, SignInManager<User> signInManager, IUserService userService = null, IMailService mailService = null)
         {
             _userManager = userManager;
             _tokenService = tokenService;
             _signInManager = signInManager;
             _userService = userService;
+            _mailService = mailService;
         }
 
         public async Task<Token> LoginAsync(string email, string password)
         {
-           User user = await _userManager.FindByEmailAsync(email);
+           User? user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
                 throw new NotFoundUserException();
@@ -44,7 +48,7 @@ namespace PreferenceRobot.Persistence.Services
             if (result.Succeeded)
             {
                 Token token = _tokenService.CreateToken(user);
-                await _userService.UpdateRefreshToken(token.RefreshToken,user,token.Expiration,15);
+                await _userService.UpdateRefreshTokenAsync(token.RefreshToken,user,token.Expiration,15);
                 return token;
 
             }
@@ -58,13 +62,39 @@ namespace PreferenceRobot.Persistence.Services
             if (user != null && user.RefreshTokenEndTime > DateTime.UtcNow)
             {
                 Token token = _tokenService.CreateToken(user);
-                await _userService.UpdateRefreshToken(token.RefreshToken, user, token.Expiration, 15);
+                await _userService.UpdateRefreshTokenAsync(token.RefreshToken, user, token.Expiration, 15);
                 return token;
             }
             else
             {
                 throw new NotFoundUserException();
             }
+        }
+
+        public async Task PasswordResetAsync(string email)
+        {
+            User? user = await _userManager.FindByEmailAsync(email);
+            if(user != null)
+            {
+                string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                byte[] tokenBytes = Encoding.UTF8.GetBytes(resetToken);
+                resetToken=WebEncoders.Base64UrlEncode(tokenBytes);
+                await _mailService.SendPasswordResetMailAsync(email,user.Id,resetToken);
+            }
+        }
+
+        //UI TARAFINDAN TETİKLENİCEK  
+        public async Task<bool> VerifyResetTokenAsync(string resetToken, string userId)
+        {
+            User user = await _userManager.FindByIdAsync(userId);
+            if (user != null) 
+            {
+                byte[] tokenBytes = WebEncoders.Base64UrlDecode(resetToken);
+                resetToken=Encoding.UTF8.GetString(tokenBytes);
+                return await _userManager.VerifyUserTokenAsync(user,
+                    _userManager.Options.Tokens.PasswordResetTokenProvider,"ResetToken",resetToken);
+            }
+            return false;
         }
     }
 }

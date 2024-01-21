@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using PreferenceRobot.Domain.Entities.Identity;
+using Microsoft.Extensions.Options;
 
 namespace PreferenceRobot.Persistence
 {
@@ -28,13 +29,12 @@ namespace PreferenceRobot.Persistence
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
             services.AddIdentity<User,Role>(opt =>
             {
+                opt.Password.RequiredLength = 3;
                 opt.Password.RequireNonAlphanumeric = false;
-                opt.Password.RequiredLength = 2;
+                opt.Password.RequireDigit = false;
                 opt.Password.RequireLowercase = false;
                 opt.Password.RequireUppercase = false;
-                opt.Password.RequireDigit = false;
-                opt.SignIn.RequireConfirmedEmail = false;
-            }).AddEntityFrameworkStores<AppDbContext>();
+            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
             services.AddScoped<IUniversityReadRepository,UniversityReadRepository>();
             services.AddScoped<IUniversityWriteRepository,UniversityWriteRepository>();
             services.AddScoped<ICityReadRepository,CityReadRepository>();

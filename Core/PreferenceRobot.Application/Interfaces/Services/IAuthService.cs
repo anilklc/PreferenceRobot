@@ -11,5 +11,7 @@ namespace PreferenceRobot.Application.Interfaces.Services
     {
         Task<Token> LoginAsync(string email,string password);
         Task<Token> RefreshTokenLoginAsync(string refreshToken);
+        Task PasswordResetAsync(string email);
+        Task<bool> VerifyResetTokenAsync(string resetToken,string userId);
     }
 }

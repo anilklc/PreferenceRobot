@@ -1,5 +1,6 @@
 ﻿using Azure.Core;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using PreferenceRobot.Application.DTOs.User;
 using PreferenceRobot.Application.Exceptions;
 using PreferenceRobot.Application.Features.Commands.User.CreateUser;
@@ -42,7 +43,7 @@ namespace PreferenceRobot.Persistence.Services
             return response;
         }
 
-        public async Task UpdateRefreshToken(string refreshToken,User user,DateTime tokenDate,int refreshTokenTime) 
+        public async Task UpdateRefreshTokenAsync(string refreshToken,User user,DateTime tokenDate,int refreshTokenTime) 
         {
 
             if (user != null)
@@ -54,6 +55,25 @@ namespace PreferenceRobot.Persistence.Services
             else
             {
                 throw new NotFoundUserException();
+            }
+        }
+
+        public async Task UpdatePasswordAsync(string userId, string resetToken, string newPassword)
+        {
+            User? user= await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                byte[] tokenBytes = WebEncoders.Base64UrlDecode(resetToken);
+                resetToken = Encoding.UTF8.GetString(tokenBytes);
+                IdentityResult result= await _userManager.ResetPasswordAsync(user,resetToken,newPassword);
+                if (result.Succeeded)
+                {
+                    await _userManager.UpdateSecurityStampAsync(user);
+                }
+                else
+                {
+                    throw new PasswordChangeException();
+                }
             }
         }
     }

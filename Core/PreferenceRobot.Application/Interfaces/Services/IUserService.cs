@@ -11,7 +11,8 @@ namespace PreferenceRobot.Application.Interfaces.Services
     public interface IUserService
     {
         Task<CreateUserResponse> CreateAsync(CreateUser user);
-        Task UpdateRefreshToken(string refreshToken, User user, DateTime tokenDate, int refreshTokenTime);
+        Task UpdateRefreshTokenAsync(string refreshToken, User user, DateTime tokenDate, int refreshTokenTime);
+        Task UpdatePasswordAsync(string userId,string resetToken,string newPassword);
 
     }
 }
