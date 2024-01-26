@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PreferenceRobot.Application.Consts;
+using PreferenceRobot.Application.CustomAttributes;
+using PreferenceRobot.Application.Enums;
 using PreferenceRobot.Application.Features.Commands.University.CreateUniversity;
 using PreferenceRobot.Application.Features.Commands.University.RemoveUniversity;
 using PreferenceRobot.Application.Features.Commands.University.UpdateUniversity;
@@ -23,7 +26,6 @@ namespace PreferenceRobot.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = "Admin")]
         public async Task<IActionResult> GetAll()
         {
             GetAllUniversityQueryResponse response = await _mediator.Send(new GetAllUniversityQueryRequest());
@@ -39,6 +41,8 @@ namespace PreferenceRobot.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = "Admin")]
+        [AuthorizeDefinition(Menu =AuthorizeDefinitionConstants.Universities,ActionType =ActionType.Writing,Definition ="Add University")]
         public async Task<IActionResult> Add([FromQuery] CreateUniversityCommandRequest createUniversityCommandRequest)
         {
             CreateUniversityCommandResponse createUniversityCommandResponse = await _mediator.Send(createUniversityCommandRequest);
@@ -46,6 +50,8 @@ namespace PreferenceRobot.API.Controllers
         }
 
         [HttpDelete("{Id}")]
+        [Authorize(AuthenticationSchemes = "Admin")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Universities, ActionType = ActionType.Deleting, Definition = "Delete University")]
         public async Task<IActionResult> Remove([FromRoute]RemoveUniversityCommandRequest removeUniversityCommandRequest)
         {
             RemoveUniversityCommandResponse removeUniversityCommandResponse = await _mediator.Send(removeUniversityCommandRequest);
@@ -53,6 +59,8 @@ namespace PreferenceRobot.API.Controllers
         }
 
         [HttpPut("[action]")]
+        [Authorize(AuthenticationSchemes = "Admin")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Universities, ActionType = ActionType.Updating, Definition = "Update University")]
         public async Task<IActionResult> Update([FromQuery] UpdateUniversityCommandRequest updateUniversityCommandRequest)
         {
             UpdateUniversityCommandResponse updateUniversityCommandResponse = await _mediator.Send(updateUniversityCommandRequest);

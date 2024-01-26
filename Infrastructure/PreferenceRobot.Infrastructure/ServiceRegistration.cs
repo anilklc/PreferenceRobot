@@ -2,8 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using PreferenceRobot.Application.Interfaces.Configurations;
 using PreferenceRobot.Application.Interfaces.Mail;
 using PreferenceRobot.Application.Interfaces.Tokens;
+using PreferenceRobot.Infrastructure.Services.Configurations;
 using PreferenceRobot.Infrastructure.Services.Mail;
 using PreferenceRobot.Infrastructure.Services.Token;
 using System;
@@ -22,6 +24,7 @@ namespace PreferenceRobot.Infrastructure
         {
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IMailService, MailService>();
+            services.AddScoped<IApplicationService, ApplicationService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
       AddJwtBearer("Admin", options =>
