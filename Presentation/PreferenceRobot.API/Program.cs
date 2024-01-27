@@ -18,6 +18,7 @@ using PreferenceRobot.API.Configurations.Logger;
 using Serilog.Context;
 using System.Configuration;
 using Microsoft.AspNetCore.HttpLogging;
+using PreferenceRobot.API.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +32,12 @@ builder.Configuration
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddApplicationService();
 builder.Services.AddInfrastructureService(builder.Configuration);
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<RolePermissionFilter>();
+})
+    .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
+
 
 SqlColumn sqlColumn = new SqlColumn();
 sqlColumn.ColumnName = "Username";

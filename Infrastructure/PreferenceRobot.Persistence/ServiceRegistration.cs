@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using PreferenceRobot.Domain.Entities.Identity;
 using Microsoft.Extensions.Options;
+using PreferenceRobot.Application.Interfaces.Repositories;
+using PreferenceRobot.Persistence.Repositories;
 
 namespace PreferenceRobot.Persistence
 {
@@ -41,11 +43,16 @@ namespace PreferenceRobot.Persistence
             services.AddScoped<ICityWriteRepository,CityWriteRepository>();
             services.AddScoped<IUserService,UserService>();
             services.AddScoped<IAuthService,AuthService>();
-            
-            
+            services.AddScoped<IRoleService,RoleService>();
+            services.AddScoped<IEndpointReadRepository, EndpointReadRepository>();
+            services.AddScoped<IEndpointWriteRepository, EndpointWriteRepository>();
+            services.AddScoped<IMenuReadRepository, MenuReadRepository>();
+            services.AddScoped<IMenuWriteRepository, MenuWriteRepository>();
+            services.AddScoped<IAuthorizationEndpointService,AuthorizationEndpointService>();
 
-            
-            
+
+
+
         }
     }
 }

@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PreferenceRobot.Application.CustomAttributes;
+using PreferenceRobot.Application.Enums;
 using PreferenceRobot.Application.Interfaces.Configurations;
 
 namespace PreferenceRobot.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes ="Admin")]
     public class ApplicationServicesController : ControllerBase
     {
         readonly IApplicationService _applicationService;
@@ -16,6 +20,7 @@ namespace PreferenceRobot.API.Controllers
         }
 
         [HttpGet]
+        [AuthorizeDefinition(ActionType = ActionType.Reading, Definition = "Get Authorize Definition Endpoints", Menu = "Application Services")]
         public IActionResult GetAuthorizeDefinitionEndpoints()
         {
             var datas = _applicationService.GetAuthorizeDefinitionEndpoints(typeof(Program));

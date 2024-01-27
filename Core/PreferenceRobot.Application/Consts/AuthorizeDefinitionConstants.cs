@@ -10,5 +10,6 @@ namespace PreferenceRobot.Application.Consts
     {
         public const string Universities = "Universities";
         public const string Cities = "Cities";
+        public const string Role = "Role";
     }
 }

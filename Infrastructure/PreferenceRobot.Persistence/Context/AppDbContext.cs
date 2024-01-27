@@ -19,6 +19,8 @@ namespace PreferenceRobot.Persistence.Context
 
         public DbSet<UniversityInfo> Universities { get; set; }
         public DbSet<City> Citys { get; set; }
+        public DbSet<Menu> Menus { get; set; }
+        public DbSet<Endpoint> Endpoints { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

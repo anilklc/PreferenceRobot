@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using PreferenceRobot.Domain.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PreferenceRobot.Domain.Entities.Identity
+namespace PreferenceRobot.Domain.Entities
 {
-    public class Role : IdentityRole<string>
+    public class Menu : BaseEntity
     {
+        public string Name { get; set; }
+
         public ICollection<Endpoint> Endpoints { get; set; }
     }
 }
