@@ -20,7 +20,7 @@ namespace PreferenceRobot.API.Filters
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             var name = context.HttpContext.User.Identity?.Name;
-            if (!string.IsNullOrEmpty(name) && name != "A123")
+            if (!string.IsNullOrEmpty(name) && name != "anil")
             {
                 var descriptor = context.ActionDescriptor as ControllerActionDescriptor;
                 var attribute = descriptor.MethodInfo.GetCustomAttribute(typeof(AuthorizeDefinitionAttribute)) as AuthorizeDefinitionAttribute;

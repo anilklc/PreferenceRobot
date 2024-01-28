@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PreferenceRobot.Application.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,20 @@ namespace PreferenceRobot.Application.Features.Commands.AuthorizationEndpoint.As
 {
     public class AssignRoleEndpointCommandHandler : IRequestHandler<AssignRoleEndpointCommandRequest, AssignRoleEndpointCommandResponse>
     {
+        private readonly IAuthorizationEndpointService _authorizationEndpointService;
+
+        public AssignRoleEndpointCommandHandler(IAuthorizationEndpointService authorizationEndpointService)
+        {
+            _authorizationEndpointService = authorizationEndpointService;
+        }
+
         public async Task<AssignRoleEndpointCommandResponse> Handle(AssignRoleEndpointCommandRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await _authorizationEndpointService.AssignRoleEndpointAsync(request.Roles, request.Menu, request.Code, request.Type);
+            return new()
+            {
+
+            };
         }
     }
 }

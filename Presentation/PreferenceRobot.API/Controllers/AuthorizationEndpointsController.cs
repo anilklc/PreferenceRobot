@@ -24,7 +24,7 @@ namespace PreferenceRobot.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
+        [HttpPost("[action]")]
         public async Task<IActionResult> AssignRoleEndpoint(AssignRoleEndpointCommandRequest assignRoleEndpointCommandRequest)
         {
             assignRoleEndpointCommandRequest.Type = typeof(Program);

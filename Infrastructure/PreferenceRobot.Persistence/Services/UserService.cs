@@ -1,6 +1,7 @@
 ﻿using Azure.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using PreferenceRobot.Application.DTOs.User;
 using PreferenceRobot.Application.Exceptions;
 using PreferenceRobot.Application.Features.Commands.User.CreateUser;
@@ -10,7 +11,6 @@ using PreferenceRobot.Domain.Entities;
 using PreferenceRobot.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
