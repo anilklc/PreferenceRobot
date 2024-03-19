@@ -1,23 +1,25 @@
 # PreferenceRobot
 
-PreferenceRobot projesi, .NET Core ile ilgili yeni öğrenilen bilgilerin test edilip ileride kullanılması ve destek alınması amacını taşımaktadır. Projede öncelikle bir ASP.NET Core Web API kullanılmıştır. Bu API, çeşitli istemcilerle (web, mobil, masaüstü uygulamaları vb.) iletişim kurmak için kullanılır.
+The PreferenceRobot project aims to test newly acquired knowledge in .NET Core and utilize it for future use and support. Primarily, an ASP.NET Core Web API is used in the project. This API is used to communicate with various clients (web, mobile, desktop applications, etc.).
 
-## Kullanılan Teknolojiler
+## Technologies Used
 
-- **ASP.NET Core:** Web API'lerin hızlı ve verimli bir şekilde geliştirilmesini sağlayan bir framework.
-- **Web API:** HTTP protokolü üzerinden istemcilerle iletişim kurmak için kullanılan bir protokol.
-- **AutoMapper:** Nesne eşleme kütüphanesi. Nesneler arasında veri aktarımını kolaylaştırır.
-- **Identity:** Kimlik doğrulama ve yetkilendirme sistemleri için bir çerçeve.
-- **JWT (JSON Web Token):** Kimlik doğrulama ve yetkilendirme süreçlerinde kullanılan bir standart.
-- **CQRS (Command Query Responsibility Segregation):** Komut sorgu sorumluluğu ayrımı, yazma ve okuma işlemlerini ayrı işlemeler olarak ele almayı sağlayan bir tasarım deseni.
-- **Onion Architecture:** Katmanlı mimari yaklaşımı. Kodun katmanlara ayrılmasını ve bağımlılıkların tersine çevrilmesini sağlar.
-- **Mail Service:** E-posta gönderimi için kullanılan bir hizmet.
-- **Logger (Seq ile):** Loglama işlevselliği sağlayan bir kütüphane. Logların daha detaylı bir şekilde görüntülenmesi için Seq kullanılmaktadır.
-- **Veritabanı (MS SQL Server):** İlişkisel veritabanı yönetim sistemi.
+- **ASP.NET Core:** A framework that enables rapid and efficient development of Web APIs.
+- **Web API:** A protocol used to communicate with clients over the HTTP protocol.
+- **AutoMapper:** An object mapping library. Facilitates data transfer between objects.
+- **Identity:** A framework for authentication and authorization systems.
+- **JWT (JSON Web Token):** A standard used in the authentication and authorization processes.
+- **CQRS (Command Query Responsibility Segregation):** A design pattern that separates write and read operations into separate operations.
+- **Onion Architecture:** Layered architectural approach. It allows the code to be divided into layers and reverses dependencies.
+- **Mail Service:** A service used for sending emails.
+- **Logger (with Seq):** A library that provides logging functionality. Seq is used for more detailed viewing of logs.
+- **Database (MS SQL Server):** A relational database management system.
 
-## Gereksinimler
+## Requirements
 
-- .NET Core SDK'sının yüklü olması gereklidir.
-- Bir IDE (Visual Studio, Visual Studio Code) veya tercih ettiğiniz bir metin düzenleyici.
-- MS SQL Server veritabanı sunucusuna erişim.
+- .NET Core SDK must be installed.
+- An IDE (Visual Studio, Visual Studio Code) or a preferred text editor.
+- Access to MS SQL Server database server.
 
+## License
+MIT
